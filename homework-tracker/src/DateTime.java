@@ -1,9 +1,15 @@
 public class DateTime {
     private int year, month, day, hour, minute;
 
-    private static int days_in_month(int month, int year){
+    public static int days_in_month(int month, int year){
         switch ((month - 1) % 12 + 1) {
-            case 1, 3, 5, 7, 8, 10, 12:
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:
                 return 31;
             case 2:
                 if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0))
@@ -19,6 +25,8 @@ public class DateTime {
         this.year = year;
         this.month = month;
         this.day = day;
+        this.hour = 0;
+        this.minute = 0;
     }
 
     public DateTime(int year, int month, int day, int hour, int minute) {
@@ -83,7 +91,7 @@ public class DateTime {
         // Adding the days
         // Assumes 30 days in every month
         new_time = to_add.getDay() + this.getDay() + add_next;
-        add_next = new_time / days_in_month(this.month, this.year); new_time = new_time % 30;
+        add_next = new_time / days_in_month(this.month, this.year); new_time = new_time % days_in_month(this.month, this.year);
         this.setDay(new_time);
 
         // Adding the months
@@ -115,7 +123,7 @@ public class DateTime {
     }
 
     public static void main(String[] args) {
-        DateTime dt = new DateTime(2024, 2, 1, 0,0);
+        DateTime dt = new DateTime(2024, 1, 1, 0,0);
         dt.add(new DateTime(0,0,31,0,500));
         System.out.println(dt);
 //        int year = 2000;
