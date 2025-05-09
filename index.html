@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homework Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Sidebar (present on all screens) -->
+    <div class="sidebar">
+        <div class="user-avatar">
+            <img src="https://via.placeholder.com/80" alt="Jane Doe">
+            <p>Jane Doe</p>
+        </div>
+        <nav>
+            <button class="nav-btn active"><i class="fas fa-home"></i> Home</button>
+            <button class="nav-btn"><i class="fas fa-cog"></i> Settings</button>
+            <button class="nav-btn"><i class="fas fa-arrow-left"></i> Back</button>
+        </nav>
+    </div>
+
+    <!-- Screen 1: Welcome Screen -->
+    <div class="screen" id="welcome-screen">
+        <div class="content">
+            <h1 class="welcome-title">Welcome to Homework Tracker</h1>
+            <div class="button-grid">
+                <button class="action-btn" id="new-user-btn">New User</button>
+                <button class="action-btn" id="add-class-btn">Add Class</button>
+                <button class="action-btn" id="add-assignment-btn">Add Assignment</button>
+                <button class="action-btn" id="start-studying-btn">Start Studying</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 2: Timer Screen -->
+    <div class="screen" id="timer-screen" style="display: none;">
+        <div class="content">
+            <h2>Currently Working On: <span id="current-assignment">Assignment Title</span></h2>
+            
+            <div class="timer-container">
+                <div class="timer">00:00</div>
+                <div class="timer-controls">
+                    <button class="timer-btn" id="pause-btn"><i class="fas fa-pause"></i></button>
+                    <button class="timer-btn" id="play-btn"><i class="fas fa-play"></i></button>
+                    <button class="timer-btn" id="stop-btn"><i class="fas fa-stop"></i></button>
+                    <button class="timer-btn" id="add-btn"><i class="fas fa-plus"></i></button>
+                </div>
+            </div>
+            
+            <div class="classes-container">
+                <div class="class-column">
+                    <h3>Math 101</h3>
+                    <div class="assignment-card" data-priority="high">
+                        <div class="card-header">
+                            <span class="class-name">Math 101</span>
+                            <span class="instructor">Prof. Smith</span>
+                        </div>
+                        <div class="card-body">
+                            <h4>Calculus Homework</h4>
+                            <p class="due-date">Due: May 10, 2025</p>
+                            <div class="priority high">High Priority</div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="card-btn edit-btn"><i class="fas fa-edit"></i></button>
+                            <button class="card-btn delete-btn"><i class="fas fa-trash"></i></button>
+                            <button class="card-btn complete-btn"><i class="far fa-square"></i></button>
+                        </div>
+                    </div>
+                    <div class="assignment-card" data-priority="medium">
+                        <div class="card-header">
+                            <span class="class-name">Math 101</span>
+                            <span class="instructor">Prof. Smith</span>
+                        </div>
+                        <div class="card-body">
+                            <h4>Algebra Quiz</h4>
+                            <p class="due-date">Due: May 15, 2025</p>
+                            <div class="priority medium">Medium Priority</div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="card-btn edit-btn"><i class="fas fa-edit"></i></button>
+                            <button class="card-btn delete-btn"><i class="fas fa-trash"></i></button>
+                            <button class="card-btn complete-btn"><i class="far fa-square"></i></button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="class-column">
+                    <h3>English 202</h3>
+                    <div class="assignment-card" data-priority="low">
+                        <div class="card-header">
+                            <span class="class-name">English 202</span>
+                            <span class="instructor">Prof. Johnson</span>
+                        </div>
+                        <div class="card-body">
+                            <h4>Essay Draft</h4>
+                            <p class="due-date">Due: May 20, 2025</p>
+                            <div class="priority low">Low Priority</div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="card-btn edit-btn"><i class="fas fa-edit"></i></button>
+                            <button class="card-btn delete-btn"><i class="fas fa-trash"></i></button>
+                            <button class="card-btn complete-btn"><i class="far fa-square"></i></button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="class-column">
+                    <h3>Computer Science 110</h3>
+                    <div class="assignment-card" data-priority="high">
+                        <div class="card-header">
+                            <span class="class-name">CS 110</span>
+                            <span class="instructor">Prof. Lee</span>
+                        </div>
+                        <div class="card-body">
+                            <h4>Programming Project</h4>
+                            <p class="due-date">Due: May 12, 2025</p>
+                            <div class="priority high">High Priority</div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="card-btn edit-btn"><i class="fas fa-edit"></i></button>
+                            <button class="card-btn delete-btn"><i class="fas fa-trash"></i></button>
+                            <button class="card-btn complete-btn"><i class="far fa-square"></i></button>
+                        </div>
+                    </div>
+                    <div class="assignment-card" data-priority="medium">
+                        <div class="card-header">
+                            <span class="class-name">CS 110</span>
+                            <span class="instructor">Prof. Lee</span>
+                        </div>
+                        <div class="card-body">
+                            <h4>Algorithm Quiz</h4>
+                            <p class="due-date">Due: May 18, 2025</p>
+                            <div class="priority medium">Medium Priority</div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="card-btn edit-btn"><i class="fas fa-edit"></i></button>
+                            <button class="card-btn delete-btn"><i class="fas fa-trash"></i></button>
+                            <button class="card-btn complete-btn"><i class="far fa-square"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 3: New User Form -->
+    <div class="screen" id="new-user-screen" style="display: none;">
+        <div class="content">
+            <h2>Create Your Profile</h2>
+            <form id="new-user-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="study-time">Preferred Study Time</label>
+                    <select id="study-time" name="study-time" required>
+                        <option value="" disabled selected>Select your preferred time</option>
+                        <option value="morning">Morning</option>
+                        <option value="afternoon">Afternoon</option>
+                        <option value="evening">Evening</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Profile Color</label>
+                    <div class="color-choices">
+                        <div class="color-option">
+                            <input type="radio" id="pink" name="color" value="pink">
+                            <label for="pink" class="color-label pink"></label>
+                        </div>
+                        <div class="color-option">
+                            <input type="radio" id="green" name="color" value="green">
+                            <label for="green" class="color-label green"></label>
+                        </div>
+                        <div class="color-option">
+                            <input type="radio" id="yellow" name="color" value="yellow">
+                            <label for="yellow" class="color-label yellow"></label>
+                        </div>
+                        <div class="color-option">
+                            <input type="radio" id="purple" name="color" value="purple">
+                            <label for="purple" class="color-label purple"></label>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="submit-btn">Create Profile</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
