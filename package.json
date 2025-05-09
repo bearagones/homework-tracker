@@ -1,0 +1,12 @@
+{
+  "name": "homework-tracker",
+  "version": "1.0.0",
+  "description": "Homework tracking application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^8.7.0"
+  }
+} 

@@ -8,195 +8,300 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <!-- Sidebar (present on all screens) -->
-    <div class="sidebar">
-        <div class="user-avatar">
-            <img src="https://via.placeholder.com/80" alt="Jane Doe">
-            <p>Jane Doe</p>
-        </div>
-        <nav>
-            <button class="nav-btn active"><i class="fas fa-home"></i> Home</button>
-            <button class="nav-btn"><i class="fas fa-cog"></i> Settings</button>
-            <button class="nav-btn"><i class="fas fa-arrow-left"></i> Back</button>
-        </nav>
-    </div>
+    <div class="app-container">
+        <!-- Sidebar (present on all screens) -->
+        <aside class="sidebar">
+            <div class="user-avatar">
+                <div id="user-avatar-img"></div>
+                <!-- Name will be set dynamically by JS if available -->
+                <p id="user-avatar-name" style="display:none;"></p>
+            </div>
+            <nav>
+                <button class="nav-btn active" id="nav-home"><i class="fas fa-home"></i> <span>Home</span></button>
+                <button class="nav-btn" id="nav-settings"><i class="fas fa-cog"></i> <span>Settings</span></button>
+            </nav>
+        </aside>
 
-    <!-- Screen 1: Welcome Screen -->
-    <div class="screen" id="welcome-screen">
-        <div class="content">
-            <h1 class="welcome-title">Welcome to Homework Tracker</h1>
-            <div class="button-grid">
-                <button class="action-btn" id="new-user-btn">New User</button>
-                <button class="action-btn" id="add-class-btn">Add Class</button>
-                <button class="action-btn" id="add-assignment-btn">Add Assignment</button>
-                <button class="action-btn" id="start-studying-btn">Start Studying</button>
+        <main class="main-content">
+            <!-- Welcome Screen -->
+            <section class="screen" id="welcome-screen">
+                <div class="content">
+                    <h1 class="welcome-title">Welcome to<br>Homework Tracker</h1>
+                    <div class="button-grid">
+                        <button class="action-btn" id="new-user-btn">New User</button>
+                        <button class="action-btn" id="add-class-btn">Add Class</button>
+                        <button class="action-btn" id="add-assignment-btn">Add Assignment</button>
+                        <button class="action-btn" id="start-studying-btn">Start Studying</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Timer/Studying Screen -->
+            <section class="screen" id="timer-screen" style="display: none;">
+                <div class="content">
+                    <h2>Currently Working On: <span id="current-assignment">No Assignment Selected</span></h2>
+                    <div class="timer-container">
+                        <div class="timer">00:00</div>
+                        <div class="timer-controls">
+                            <button class="timer-btn" id="pause-btn"><i class="fas fa-pause"></i></button>
+                            <button class="timer-btn" id="play-btn"><i class="fas fa-play"></i></button>
+                            <button class="timer-btn" id="stop-btn"><i class="fas fa-stop"></i></button>
+                            <button class="timer-btn" id="add-btn"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="classes-container" id="classes-container">
+                        <!-- Classes and assignments will be dynamically rendered here -->
+                    </div>
+                    <button class="action-btn" id="add-assignment-btn-timer">Add Assignment</button>
+                </div>
+            </section>
+
+            <!-- New User Screen -->
+            <section class="screen" id="new-user-screen" style="display: none;">
+                <div class="content">
+                    <h2 class="form-title">Create a New User Profile</h2>
+                    <form id="new-user-form">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="study-time">Preferred Study Time</label>
+                            <select id="study-time" name="study-time" required>
+                                <option value="" disabled selected>Select your preferred time</option>
+                                <option value="morning">Morning</option>
+                                <option value="afternoon">Afternoon</option>
+                                <option value="evening">Evening</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Profile Color</label>
+                            <div class="color-choices">
+                                <div class="color-option">
+                                    <input type="radio" id="pink" name="color" value="pink">
+                                    <label for="pink" class="color-label pink"></label>
+                                </div>
+                                <div class="color-option">
+                                    <input type="radio" id="green" name="color" value="green">
+                                    <label for="green" class="color-label green"></label>
+                                </div>
+                                <div class="color-option">
+                                    <input type="radio" id="yellow" name="color" value="yellow">
+                                    <label for="yellow" class="color-label yellow"></label>
+                                </div>
+                                <div class="color-option">
+                                    <input type="radio" id="purple" name="color" value="purple">
+                                    <label for="purple" class="color-label purple"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="submit-btn">Create Profile</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Add Assignment Screen -->
+            <section class="screen" id="add-assignment-screen" style="display: none;">
+                <div class="content">
+                    <h2 class="form-title">Add a New Assignment</h2>
+                    <form id="add-assignment-form">
+                        <div class="form-group">
+                            <label for="assignment-title">Assignment Title</label>
+                            <input type="text" id="assignment-title" name="assignment-title" placeholder="e.g., Chapter 4 Math Homework" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="assignment-class">Select Class</label>
+                            <select id="assignment-class" name="assignment-class" required>
+                                <option value="" disabled selected>Select a class</option>
+                                <!-- Classes will be dynamically populated here -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="due-date">Due Date</label>
+                            <input type="date" id="due-date" name="due-date" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Priority Level</label>
+                            <div class="color-choices">
+                                <div class="color-option">
+                                    <input type="radio" id="priority-high" name="priority" value="High">
+                                    <label for="priority-high" class="color-label pink"></label>
+                                </div>
+                                <div class="color-option">
+                                    <input type="radio" id="priority-medium" name="priority" value="Medium">
+                                    <label for="priority-medium" class="color-label yellow"></label>
+                                </div>
+                                <div class="color-option">
+                                    <input type="radio" id="priority-low" name="priority" value="Low">
+                                    <label for="priority-low" class="color-label green"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="submit-btn">Add Assignment</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Add Class Screen -->
+            <section class="screen" id="add-class-screen" style="display: none;">
+                <div class="content">
+                    <h2 class="form-title">Add a New Class</h2>
+                    <form id="add-class-form">
+                        <div class="form-group">
+                            <label for="class-name">Class Name</label>
+                            <input type="text" id="class-name" name="class-name" placeholder="e.g., biology" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="instructor-name">Instructor Name</label>
+                            <input type="text" id="instructor-name" name="instructor-name" placeholder="e.g., Mr. Johnson" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="class-schedule">Class Schedule</label>
+                            <input type="text" id="class-schedule" name="class-schedule" placeholder="e.g., Mon/Wed/Fri 9:00am - 12pm" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Class Color Label</label>
+                            <div class="color-choices">
+                                <div class="color-option">
+                                    <input type="radio" id="class-pink" name="class-color" value="pink">
+                                    <label for="class-pink" class="color-label pink"></label>
+                                </div>
+                                <div class="color-option">
+                                    <input type="radio" id="class-green" name="class-color" value="green">
+                                    <label for="class-green" class="color-label green"></label>
+                                </div>
+                                <div class="color-option">
+                                    <input type="radio" id="class-yellow" name="class-color" value="yellow">
+                                    <label for="class-yellow" class="color-label yellow"></label>
+                                </div>
+                                <div class="color-option">
+                                    <input type="radio" id="class-purple" name="class-color" value="purple">
+                                    <label for="class-purple" class="color-label purple"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="submit-btn">Add Class</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Settings Screen -->
+            <section class="screen" id="settings-screen" style="display: none;">
+                <div class="content">
+                    <h2 class="form-title">👤 User Profile Settings</h2>
+                    <form id="settings-form">
+                        <div class="form-group">
+                            <label for="settings-name">Name</label>
+                            <input type="text" id="settings-name" name="settings-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="settings-email">Email</label>
+                            <input type="email" id="settings-email" name="settings-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="settings-study-time">Preferred Study Time</label>
+                            <select id="settings-study-time" name="settings-study-time" required>
+                                <option value="morning">Morning</option>
+                                <option value="afternoon">Afternoon</option>
+                                <option value="evening">Evening</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Profile Color / Theme</label>
+                            <div class="color-choices">
+                                <div class="color-option">
+                                    <input type="radio" id="settings-pink" name="settings-color" value="pink">
+                                    <label for="settings-pink" class="color-label pink"></label>
+                                </div>
+                                <div class="color-option">
+                                    <input type="radio" id="settings-green" name="settings-color" value="green">
+                                    <label for="settings-green" class="color-label green"></label>
+                                </div>
+                                <div class="color-option">
+                                    <input type="radio" id="settings-yellow" name="settings-color" value="yellow">
+                                    <label for="settings-yellow" class="color-label yellow"></label>
+                                </div>
+                                <div class="color-option">
+                                    <input type="radio" id="settings-purple" name="settings-color" value="purple">
+                                    <label for="settings-purple" class="color-label purple"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="submit-btn">Save Changes</button>
+                    </form>
+                    <div style="margin-top: 32px; display: flex; gap: 20px;">
+                        <button class="action-btn" id="settings-statistics-btn">Study time statistics</button>
+                        <button class="action-btn" id="settings-completed-btn">Completed Assignments</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Study Time Statistics Screen -->
+            <section class="screen" id="statistics-screen" style="display: none;">
+                <div class="content">
+                    <h2 class="form-title">📊 Study Time Statistics</h2>
+                    <div id="statistics-summary" class="statistics-summary">
+                        <!-- Summary data will be rendered here -->
+                    </div>
+                    <div id="statistics-chart" class="statistics-chart">
+                        <!-- Weekly chart will be rendered here -->
+                    </div>
+                    <button class="action-btn" id="statistics-back-btn" style="margin-top: 32px;">Back to Settings</button>
+                </div>
+            </section>
+
+            <!-- Completed Assignments Screen -->
+            <section class="screen" id="completed-screen" style="display: none;">
+                <div class="content">
+                    <h2 class="form-title">✅ Completed Assignments</h2>
+                    <div class="completed-controls" style="margin-bottom: 18px; display: flex; gap: 16px; flex-wrap: wrap; align-items: center;">
+                        <label for="completed-filter-course">Filter by Course:</label>
+                        <select id="completed-filter-course">
+                            <option value="all">All</option>
+                        </select>
+                        <label for="completed-sort">Sort by:</label>
+                        <select id="completed-sort">
+                            <option value="completion">Completion Date</option>
+                            <option value="due">Due Date</option>
+                            <option value="priority">Priority</option>
+                        </select>
+                    </div>
+                    <div class="completed-table-container">
+                        <table class="completed-table">
+                            <thead>
+                                <tr>
+                                    <th>Assignment Title</th>
+                                    <th>Course</th>
+                                    <th>Due Date</th>
+                                    <th>Completed On</th>
+                                    <th>Priority</th>
+                                </tr>
+                            </thead>
+                            <tbody id="completed-tbody">
+                                <!-- Completed assignments will be rendered here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <button class="action-btn" id="completed-back-btn" style="margin-top: 32px;">Back to Settings</button>
+                </div>
+            </section>
+        </main>
+    </div>
+    <div id="toast-container"></div>
+    <div id="spinner-overlay" style="display:none;"><div class="spinner"></div></div>
+    <div id="modal-overlay" style="display:none;">
+        <div class="modal">
+            <div id="modal-message"></div>
+            <div class="modal-actions">
+                <button id="modal-confirm-btn" class="action-btn">Yes</button>
+                <button id="modal-cancel-btn" class="action-btn">No</button>
             </div>
         </div>
     </div>
-
-    <!-- Screen 2: Timer Screen -->
-    <div class="screen" id="timer-screen" style="display: none;">
-        <div class="content">
-            <h2>Currently Working On: <span id="current-assignment">Assignment Title</span></h2>
-            
-            <div class="timer-container">
-                <div class="timer">00:00</div>
-                <div class="timer-controls">
-                    <button class="timer-btn" id="pause-btn"><i class="fas fa-pause"></i></button>
-                    <button class="timer-btn" id="play-btn"><i class="fas fa-play"></i></button>
-                    <button class="timer-btn" id="stop-btn"><i class="fas fa-stop"></i></button>
-                    <button class="timer-btn" id="add-btn"><i class="fas fa-plus"></i></button>
-                </div>
-            </div>
-            
-            <div class="classes-container">
-                <div class="class-column">
-                    <h3>Math 101</h3>
-                    <div class="assignment-card" data-priority="high">
-                        <div class="card-header">
-                            <span class="class-name">Math 101</span>
-                            <span class="instructor">Prof. Smith</span>
-                        </div>
-                        <div class="card-body">
-                            <h4>Calculus Homework</h4>
-                            <p class="due-date">Due: May 10, 2025</p>
-                            <div class="priority high">High Priority</div>
-                        </div>
-                        <div class="card-actions">
-                            <button class="card-btn edit-btn"><i class="fas fa-edit"></i></button>
-                            <button class="card-btn delete-btn"><i class="fas fa-trash"></i></button>
-                            <button class="card-btn complete-btn"><i class="far fa-square"></i></button>
-                        </div>
-                    </div>
-                    <div class="assignment-card" data-priority="medium">
-                        <div class="card-header">
-                            <span class="class-name">Math 101</span>
-                            <span class="instructor">Prof. Smith</span>
-                        </div>
-                        <div class="card-body">
-                            <h4>Algebra Quiz</h4>
-                            <p class="due-date">Due: May 15, 2025</p>
-                            <div class="priority medium">Medium Priority</div>
-                        </div>
-                        <div class="card-actions">
-                            <button class="card-btn edit-btn"><i class="fas fa-edit"></i></button>
-                            <button class="card-btn delete-btn"><i class="fas fa-trash"></i></button>
-                            <button class="card-btn complete-btn"><i class="far fa-square"></i></button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="class-column">
-                    <h3>English 202</h3>
-                    <div class="assignment-card" data-priority="low">
-                        <div class="card-header">
-                            <span class="class-name">English 202</span>
-                            <span class="instructor">Prof. Johnson</span>
-                        </div>
-                        <div class="card-body">
-                            <h4>Essay Draft</h4>
-                            <p class="due-date">Due: May 20, 2025</p>
-                            <div class="priority low">Low Priority</div>
-                        </div>
-                        <div class="card-actions">
-                            <button class="card-btn edit-btn"><i class="fas fa-edit"></i></button>
-                            <button class="card-btn delete-btn"><i class="fas fa-trash"></i></button>
-                            <button class="card-btn complete-btn"><i class="far fa-square"></i></button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="class-column">
-                    <h3>Computer Science 110</h3>
-                    <div class="assignment-card" data-priority="high">
-                        <div class="card-header">
-                            <span class="class-name">CS 110</span>
-                            <span class="instructor">Prof. Lee</span>
-                        </div>
-                        <div class="card-body">
-                            <h4>Programming Project</h4>
-                            <p class="due-date">Due: May 12, 2025</p>
-                            <div class="priority high">High Priority</div>
-                        </div>
-                        <div class="card-actions">
-                            <button class="card-btn edit-btn"><i class="fas fa-edit"></i></button>
-                            <button class="card-btn delete-btn"><i class="fas fa-trash"></i></button>
-                            <button class="card-btn complete-btn"><i class="far fa-square"></i></button>
-                        </div>
-                    </div>
-                    <div class="assignment-card" data-priority="medium">
-                        <div class="card-header">
-                            <span class="class-name">CS 110</span>
-                            <span class="instructor">Prof. Lee</span>
-                        </div>
-                        <div class="card-body">
-                            <h4>Algorithm Quiz</h4>
-                            <p class="due-date">Due: May 18, 2025</p>
-                            <div class="priority medium">Medium Priority</div>
-                        </div>
-                        <div class="card-actions">
-                            <button class="card-btn edit-btn"><i class="fas fa-edit"></i></button>
-                            <button class="card-btn delete-btn"><i class="fas fa-trash"></i></button>
-                            <button class="card-btn complete-btn"><i class="far fa-square"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Screen 3: New User Form -->
-    <div class="screen" id="new-user-screen" style="display: none;">
-        <div class="content">
-            <h2>Create Your Profile</h2>
-            <form id="new-user-form">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" placeholder="Enter your name" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="study-time">Preferred Study Time</label>
-                    <select id="study-time" name="study-time" required>
-                        <option value="" disabled selected>Select your preferred time</option>
-                        <option value="morning">Morning</option>
-                        <option value="afternoon">Afternoon</option>
-                        <option value="evening">Evening</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label>Profile Color</label>
-                    <div class="color-choices">
-                        <div class="color-option">
-                            <input type="radio" id="pink" name="color" value="pink">
-                            <label for="pink" class="color-label pink"></label>
-                        </div>
-                        <div class="color-option">
-                            <input type="radio" id="green" name="color" value="green">
-                            <label for="green" class="color-label green"></label>
-                        </div>
-                        <div class="color-option">
-                            <input type="radio" id="yellow" name="color" value="yellow">
-                            <label for="yellow" class="color-label yellow"></label>
-                        </div>
-                        <div class="color-option">
-                            <input type="radio" id="purple" name="color" value="purple">
-                            <label for="purple" class="color-label purple"></label>
-                        </div>
-                    </div>
-                </div>
-                
-                <button type="submit" class="submit-btn">Create Profile</button>
-            </form>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
